@@ -17,8 +17,8 @@ namespace SZGYA_WPF_Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int last;
-        private int current;
+        private double last;
+        private double current;
         private string currentStr = "";
         private string secondaryStr = "";
         private string op = "";
@@ -26,18 +26,25 @@ namespace SZGYA_WPF_Calculator
         public MainWindow()
         {
             InitializeComponent();
+            updateDisplay("0");
+            updateSecondaryDisplay(string.Empty);
         }
 
         private void numberBtnClick(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            updateDisplay(b.Content.ToString());
+            updateDisplay(b.Content.ToString(), current == 0);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             updateDisplay(string.Empty);
             updateSecondaryDisplay(string.Empty);
+        }
+
+        private void btnDeletePartial_Click(object sender, RoutedEventArgs e)
+        {
+            updateDisplay(string.Empty);
         }
 
         private void opHandler(object sender, RoutedEventArgs e)
@@ -47,8 +54,47 @@ namespace SZGYA_WPF_Calculator
             {
                 op = b.Content.ToString();
                 last = current;
-                updateDisplay(string.Empty);
-                updateSecondaryDisplay($"{last} {op}");
+                if (op == "x²")
+                {
+                    updateSecondaryDisplay($"{last}²");
+                    current = Math.Pow(current, 2);
+                    updateDisplay($"{current}", true);
+                    op = string.Empty;
+                }
+                else if (op == "√x")
+                {
+                    updateSecondaryDisplay($"√{current}");
+                    current = Math.Sqrt(current);
+                    updateDisplay($"{current}", true);
+                    op = string.Empty;
+                }
+                else if (op == "±")
+                {
+                    updateSecondaryDisplay($"negate({current})");
+                    current = -current;
+                    updateDisplay($"{current}", true);
+                    op = string.Empty;
+                }
+                else if (op == "⅟x")
+                {
+                    updateSecondaryDisplay($"⅟({current})");
+                    if (current == 0)
+                    {
+                        lblCurrent.Content = "Nullával nem lehet osztani";
+                        op = string.Empty;
+                    }
+                    else
+                    {
+                        current = 1 / current;
+                        updateDisplay($"{current}", true);
+                        op = string.Empty;
+                    }
+                }
+                else
+                {
+                    updateDisplay(string.Empty);
+                    updateSecondaryDisplay($"{last} {op}");
+                }
             }
             else
             {
@@ -78,11 +124,17 @@ namespace SZGYA_WPF_Calculator
                     op = string.Empty;
                     break;
                 case "/":
+                    if (current == 0)
+                    {
+                        lblCurrent.Content = "Nullával nem lehet osztani";
+                        op = string.Empty;
+                        break;
+                    }
                     last = last / current;
                     updateDisplay($"{last}", true);
                     op = string.Empty;
                     break;
-                default:
+                default: 
                     break;
             }
         }
@@ -91,7 +143,7 @@ namespace SZGYA_WPF_Calculator
         {
             if (clear || content == string.Empty) currentStr = string.Empty;
             currentStr += content;
-            current = currentStr != string.Empty ? int.Parse(currentStr) : 0;
+            current = currentStr != string.Empty ? double.Parse(currentStr) : 0;
             lblCurrent.Content = currentStr;
         }
 
@@ -100,5 +152,17 @@ namespace SZGYA_WPF_Calculator
             secondaryStr = content;
             lblSecondary.Content = secondaryStr;
         }
+
+        private void chkTudomanyos_Checked(object sender, RoutedEventArgs e)
+        {
+            gridCalc.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
+        }
+
+        private void chkTudomanyosUnchecked(object sender, RoutedEventArgs e)
+        {
+            gridCalc.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Pixel);
+        }
+
+        
     }
 }

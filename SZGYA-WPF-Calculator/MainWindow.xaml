@@ -5,45 +5,70 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SZGYA_WPF_Calculator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="450">
-    <Grid Margin="0,160,0,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <Button Content="Button" Grid.Row="0" Grid.Column="0"/>
-        <Button Content="Button" Grid.Row="0" Grid.Column="1"/>
-        <Button x:Name="btnDelete" Content="C" Grid.Row="0" Grid.Column="2" Click="btnDelete_Click"/>
-        <Button x:Name="btn7" Content="7" Grid.Row="1" Grid.Column="0" Click="numberBtnClick"/>
-        <Button x:Name="btn8" Content="8" Grid.Row="1" Grid.Column="1" Click="numberBtnClick"/>
-        <Button x:Name="btn9" Content="9" Grid.Row="1" Grid.Column="2" Click="numberBtnClick"/>
-        <Button x:Name="btn4" Content="4" Grid.Row="2" Grid.Column="0" Click="numberBtnClick"/>
-        <Button x:Name="btn5" Content="5" Grid.Row="2" Grid.Column="1" Click="numberBtnClick"/>
-        <Button x:Name="btn6" Content="6" Grid.Row="2" Grid.Column="2" Click="numberBtnClick"/>
-        <Button x:Name="btn1" Content="1" Grid.Row="3" Grid.Column="0" Click="numberBtnClick"/>
-        <Button x:Name="btn2" Content="2" Grid.Row="3" Grid.Column="1" Click="numberBtnClick"/>
-        <Button x:Name="btn3" Content="3" Grid.Row="3" Grid.Column="2" Click="numberBtnClick"/>
-        <Button Content="Button" Grid.Row="4" Grid.Column="0"/>
-        <Button x:Name="btn0" Content="0" Grid.Row="4" Grid.Column="1" Click="numberBtnClick"/>
-        <Button Content="Button" Grid.Row="4" Grid.Column="2"/>
+        Title="Calculator" Height="600" Width="450">
 
-        <Button x:Name="btonOsztas" Content="/" Grid.Row="0" Grid.Column="4" Click="opHandler"/>
-        <Button x:Name="btnSzorzas" Content="X" Grid.Row="1" Grid.Column="4" Click="opHandler"/>
-        <Button x:Name="btnMinusz" Content="-" Grid.Row="2" Grid.Column="4" Click="opHandler"/>
-        <Button x:Name="btnPlusz" Content="+" Grid.Row="3" Grid.Column="4" Click="opHandler"/>
-        <Button x:Name="btnEgyenlo" Content="=" Grid.Row="4" Grid.Column="4" Click="calculateResult"/>
-        <Label x:Name="lblSecondary" Content="[szamolas placeholder]" HorizontalAlignment="Center" Margin="12,-142,0,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="46" Width="405"  HorizontalContentAlignment="Right"/>
-        <Label x:Name="lblCurrent" Content="[eredmeny]" HorizontalAlignment="Center" Margin="0,-91,0,0" VerticalAlignment="Top" Grid.ColumnSpan="4" Height="45" FontSize="22" Width="391" HorizontalContentAlignment="Right"/>
+    <DockPanel Height="Auto" VerticalAlignment="Stretch">
+        <StackPanel DockPanel.Dock="Top">
+            <Label x:Name="lblSecondary" Content="[szamolas placeholder]" HorizontalAlignment="Stretch" Margin="24,0" VerticalContentAlignment="Center" Grid.ColumnSpan="4"  HorizontalContentAlignment="Right" Height="34" FontSize="16"/>
+            <Label x:Name="lblCurrent" Content="[eredmeny]" HorizontalAlignment="Stretch" Margin="12,0" Grid.ColumnSpan="4" Height="65" FontSize="36" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+            <CheckBox x:Name="chkTudomanyos" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Center" Content="Tudományos" FontSize="20" Margin="24,0" Checked="chkTudomanyos_Checked" Unchecked="chkTudomanyosUnchecked"/>
+        </StackPanel>
+        <Grid x:Name="gridCalc" VerticalAlignment="Stretch" DockPanel.Dock="Bottom" Margin="10,10">
+            <Grid.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="5,5" />
+                    <Style.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5" />
+                        </Style>
+                    </Style.Resources>
+                </Style>
+
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="[nincs impl]" Grid.Row="0" Grid.Column="0"/>
+            <Button x:Name="btnGyok" Content="√x" Grid.Row="0" Grid.Column="1" Click="opHandler"/>
+            <Button x:Name="btnNegyzet" Content="x²" Grid.Row="0" Grid.Column="2" Click="opHandler"/>
+            <Button Content="[nincs impl]" Grid.Row="0" Grid.Column="3"/>
+            <Button x:Name="btnReciprok" Content="⅟x" Grid.Row="1" Grid.Column="0" Click="opHandler"/>
+            <Button x:Name="btnDelete" Content="C" Grid.Row="1" Grid.Column="1" Click="btnDelete_Click"/>
+            <Button x:Name="btnDeletePartial" Content="Ce" Grid.Row="1" Grid.Column="2" Click="btnDeletePartial_Click"/>
+            <Button x:Name="btn7" Content="7" Grid.Row="2" Grid.Column="0" Click="numberBtnClick"/>
+            <Button x:Name="btn8" Content="8" Grid.Row="2" Grid.Column="1" Click="numberBtnClick"/>
+            <Button x:Name="btn9" Content="9" Grid.Row="2" Grid.Column="2" Click="numberBtnClick"/>
+            <Button x:Name="btn4" Content="4" Grid.Row="3" Grid.Column="0" Click="numberBtnClick"/>
+            <Button x:Name="btn5" Content="5" Grid.Row="3" Grid.Column="1" Click="numberBtnClick"/>
+            <Button x:Name="btn6" Content="6" Grid.Row="3" Grid.Column="2" Click="numberBtnClick"/>
+            <Button x:Name="btn1" Content="1" Grid.Row="4" Grid.Column="0" Click="numberBtnClick"/>
+            <Button x:Name="btn2" Content="2" Grid.Row="4" Grid.Column="1" Click="numberBtnClick"/>
+            <Button x:Name="btn3" Content="3" Grid.Row="4" Grid.Column="2" Click="numberBtnClick"/>
+            <Button x:Name="btnNegate" Content="±" Grid.Row="5" Grid.Column="0" Click="opHandler"/>
+            <Button x:Name="btn0" Content="0" Grid.Row="5" Grid.Column="1" Click="numberBtnClick"/>
+            <Button x:Name="btnTizedes" Content="," Grid.Row="5" Grid.Column="2" Click="numberBtnClick"/>
+
+            <Button x:Name="btonOsztas" Content="/" Grid.Row="1" Grid.Column="4" Click="opHandler"/>
+            <Button x:Name="btnSzorzas" Content="X" Grid.Row="2" Grid.Column="4" Click="opHandler"/>
+            <Button x:Name="btnMinusz" Content="-" Grid.Row="3" Grid.Column="4" Click="opHandler"/>
+            <Button x:Name="btnPlusz" Content="+" Grid.Row="4" Grid.Column="4" Click="opHandler"/>
+            <Button x:Name="btnEgyenlo" Content="=" Grid.Row="5" Grid.Column="4" Click="calculateResult"/>
 
 
-    </Grid>
+
+
+        </Grid>
+    </DockPanel>
 </Window>
