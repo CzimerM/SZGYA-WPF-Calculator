@@ -26,7 +26,7 @@
 
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0*"/>
+                <RowDefinition Height="0"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -43,7 +43,7 @@
             <Button Content="[nincs impl]" Grid.Row="0" Grid.Column="0"/>
             <Button x:Name="btnGyok" Content="√x" Grid.Row="0" Grid.Column="1" Click="opHandler"/>
             <Button x:Name="btnNegyzet" Content="x²" Grid.Row="0" Grid.Column="2" Click="opHandler"/>
-            <Button Content="[nincs impl]" Grid.Row="0" Grid.Column="3"/>
+            <Button x:Name="btnHatvany" Content="^" Grid.Row="0" Grid.Column="3" Click="opHandler"/>
             <Button x:Name="btnReciprok" Content="⅟x" Grid.Row="1" Grid.Column="0" Click="opHandler"/>
             <Button x:Name="btnDelete" Content="C" Grid.Row="1" Grid.Column="1" Click="btnDelete_Click"/>
             <Button x:Name="btnDeletePartial" Content="Ce" Grid.Row="1" Grid.Column="2" Click="btnDeletePartial_Click"/>

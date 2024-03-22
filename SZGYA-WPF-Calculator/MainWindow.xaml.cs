@@ -134,6 +134,11 @@ namespace SZGYA_WPF_Calculator
                     updateDisplay($"{last}", true);
                     op = string.Empty;
                     break;
+                case "^":
+                    last = Math.Pow(last, current);
+                    updateDisplay($"{last}", true);
+                    op = string.Empty;
+                    break;
                 default: 
                     break;
             }
