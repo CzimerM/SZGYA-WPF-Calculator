@@ -17,8 +17,8 @@ namespace SZGYA_WPF_Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private double last;
-        private double current;
+        private double last = 0;
+        private double current = 0;
         private string currentStr = "";
         private string secondaryStr = "";
         private string op = "";
@@ -33,7 +33,8 @@ namespace SZGYA_WPF_Calculator
         private void numberBtnClick(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            updateDisplay(b.Content.ToString(), current == 0);
+            if (b.Content.ToString() == "," && current == 0) updateDisplay(b.Content.ToString());
+            else updateDisplay(b.Content.ToString(), current == 0);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
