@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SZGYA_WPF_Calculator
 {
@@ -28,13 +29,28 @@ namespace SZGYA_WPF_Calculator
             InitializeComponent();
             updateDisplay("0");
             updateSecondaryDisplay(string.Empty);
+            this.KeyDown += new KeyEventHandler(OnButtonKeyDown);
+        }
+
+        private void OnButtonKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key.ToString().Last() >= '0' && e.Key.ToString().Last() <= '9') {
+                string numString = $"{e.Key.ToString().Last()}";
+                updateNum(numString);
+            }
         }
 
         private void numberBtnClick(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
-            if (b.Content.ToString() == "," && current == 0) updateDisplay(b.Content.ToString());
-            else updateDisplay(b.Content.ToString(), current == 0);
+            updateNum(b.Content.ToString());
+            
+        }
+
+        void updateNum(string num)
+        {
+            if (num == "," && current == 0) updateDisplay(num);
+            else updateDisplay(num, current == 0);
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
