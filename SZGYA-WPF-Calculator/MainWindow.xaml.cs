@@ -38,13 +38,13 @@ namespace SZGYA_WPF_Calculator
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            updateDisplay(string.Empty);
+            updateDisplay("0", true);
             updateSecondaryDisplay(string.Empty);
         }
 
         private void btnDeletePartial_Click(object sender, RoutedEventArgs e)
         {
-            updateDisplay(string.Empty);
+            updateDisplay("0", true);
         }
 
         private void opHandler(object sender, RoutedEventArgs e)
