@@ -185,6 +185,9 @@ namespace SZGYA_WPF_Calculator
             gridCalc.RowDefinitions[0].Height = new GridLength(0, GridUnitType.Pixel);
         }
 
-        
+        private void btnBackspace_Click(object sender, RoutedEventArgs e)
+        {
+            //updateDisplay(currentStr)
+        }
     }
 }
