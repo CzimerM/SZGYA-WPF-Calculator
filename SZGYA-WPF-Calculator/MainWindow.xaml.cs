@@ -14,7 +14,10 @@ using static System.Net.Mime.MediaTypeNames;
 namespace SZGYA_WPF_Calculator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// A számológép képes 2 bármely double típusba beleférő számon a gombok által elérhető műveleteket végrehajtani.
+    /// Nem működik:
+    ///     - Backspace
+    ///     - Fizikai numpad támogatás csak részleges
     /// </summary>
     public partial class MainWindow : Window
     {
