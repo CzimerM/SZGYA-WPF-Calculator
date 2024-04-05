@@ -15,8 +15,9 @@ namespace SZGYA_WPF_Calculator
 {
     /// <summary>
     /// A számológép képes 2 bármely double típusba beleférő számon a gombok által elérhető műveleteket végrehajtani.
+    /// Az alkalmazás reszponzív. 
+    /// Az eredmény és a számítás két külön mezőben jelennek meg.
     /// Nem működik:
-    ///     - Backspace
     ///     - Fizikai numpad támogatás csak részleges
     /// </summary>
     public partial class MainWindow : Window
@@ -190,7 +191,9 @@ namespace SZGYA_WPF_Calculator
 
         private void btnBackspace_Click(object sender, RoutedEventArgs e)
         {
-            //updateDisplay(currentStr)
+            currentStr = String.Concat(currentStr.Take(currentStr.Length - 1));
+            if (currentStr == "") currentStr = "0";
+            updateDisplay(currentStr, true);
         }
     }
 }
