@@ -15,10 +15,9 @@ namespace SZGYA_WPF_Calculator
 {
     /// <summary>
     /// A számológép képes 2 bármely double típusba beleférő számon a gombok által elérhető műveleteket végrehajtani.
-    /// Az alkalmazás reszponzív. 
-    /// Az eredmény és a számítás két külön mezőben jelennek meg.
-    /// Nem működik:
-    ///     - Fizikai numpad támogatás csak részleges
+    /// - Az alkalmazás reszponzív. 
+    /// - Az eredmény és a számítás két külön mezőben jelennek meg.
+    /// - A billentyűzet numpad gombjai is használhatóak.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -38,9 +37,38 @@ namespace SZGYA_WPF_Calculator
 
         private void OnButtonKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key.ToString().Last() >= '0' && e.Key.ToString().Last() <= '9') {
+            if (e.Key.ToString().Last() >= '0' && e.Key.ToString().Last() <= '9')
+            {
                 string numString = $"{e.Key.ToString().Last()}";
                 updateNum(numString);
+            }
+            else
+            {
+                switch (e.Key.ToString())
+                {
+                    case "Back":
+                        backspace();
+                        break;
+                    case "Add":
+                        opHandler("+");
+                        break;
+                    case "Subtract":
+                        opHandler("-");
+                        break;
+                    case "Multiply":
+                        opHandler("X");
+                        break;
+                    case "Divide":
+                        opHandler("/");
+                        break;
+                    case "Decimal":
+                        updateNum(",");
+                        break;
+                    case "Return":
+                        calculateResult();
+                        break;
+                    default: break;
+                }
             }
         }
 
@@ -48,7 +76,7 @@ namespace SZGYA_WPF_Calculator
         {
             Button b = (Button)sender;
             updateNum(b.Content.ToString());
-            
+
         }
 
         void updateNum(string num)
@@ -68,12 +96,17 @@ namespace SZGYA_WPF_Calculator
             updateDisplay("0", true);
         }
 
-        private void opHandler(object sender, RoutedEventArgs e)
+        private void opHandlerBtn(object sender, RoutedEventArgs e)
         {
             Button b = (Button)sender;
+            opHandler(b.Content.ToString());
+        }
+
+        private void opHandler(string newOp)
+        {
             if (op == string.Empty)
             {
-                op = b.Content.ToString();
+                op = newOp;
                 last = current;
                 if (op == "x²")
                 {
@@ -119,12 +152,17 @@ namespace SZGYA_WPF_Calculator
             }
             else
             {
-                op = b.Content.ToString();
+                op = newOp;
                 updateSecondaryDisplay($"{last} {op}");
             }
         }
 
-        private void calculateResult(object sender, RoutedEventArgs e)
+        private void btnEgyenlo_Click(object sender, RoutedEventArgs e)
+        {
+            calculateResult();
+        }
+
+        private void calculateResult()
         {
             updateSecondaryDisplay($"{last} {op} {current}");
             switch (op)
@@ -160,7 +198,8 @@ namespace SZGYA_WPF_Calculator
                     updateDisplay($"{last}", true);
                     op = string.Empty;
                     break;
-                default: 
+                default:
+                    updateSecondaryDisplay($"{current}");
                     break;
             }
         }
@@ -190,6 +229,11 @@ namespace SZGYA_WPF_Calculator
         }
 
         private void btnBackspace_Click(object sender, RoutedEventArgs e)
+        {
+            backspace();
+        }
+
+        private void backspace()
         {
             currentStr = String.Concat(currentStr.Take(currentStr.Length - 1));
             if (currentStr == "") currentStr = "0";
